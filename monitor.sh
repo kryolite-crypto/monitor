@@ -39,7 +39,21 @@ do
 
   if [[ $samesame == 0 ]]
   then
-    curl -X POST -H "Content-Type: application/json" -d '{"content": "testnet-1 and testnet-2 differ"}' "$discord_webhook"
+    TEMP_FILE="/tmp/last_alarm_time.txt"
+
+    if [[ -f $TEMP_FILE ]]; then
+      current_hour=$(date +"%H")
+      last_alarm_hour=$(cat $TEMP_FILE)
+
+      if [[ $current_hour -eq $last_alarm_hour ]]; then
+        echo "Alarm already sent in this hour."
+      else
+        echo "Sending alarm..."
+
+        date +"%H" > $TEMP_FILE
+        curl -X POST -H "Content-Type: application/json" -d '{"content": "testnet-1 and testnet-2 differ"}' "$discord_webhook"
+      fi
+    fi
   fi
 
 done
