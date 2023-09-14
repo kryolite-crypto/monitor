@@ -17,8 +17,8 @@ do
     _fetch https://testnet-2.kryolite.io/chainstate "/tmp/testnet-2-$i" &
     wait
 
-    printf "\n" > "/tmp/testnet-1-$i"
-    printf "\n" > "/tmp/testnet-2-$i"
+    printf "\n" >> "/tmp/testnet-1-$i"
+    printf "\n" >> "/tmp/testnet-2-$i"
 
     sleep $delay
   done
